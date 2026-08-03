@@ -36,6 +36,7 @@ PlasmoidItem {
     // so we resolve the URL ourselves and strip the file:// prefix.
     readonly property string proxyOnScript: scriptPath("../scripts/proxy_on.sh")
     readonly property string proxyOffScript: scriptPath("../scripts/proxy_off.sh")
+    readonly property string gsettingsOffScript: scriptPath("../scripts/gsettings_off.sh")
     readonly property string stateQueryCommand: "systemctl --user show-environment | grep -q '^HTTP_PROXY=.' && echo ON || echo OFF"
 
     // Current state; source of truth is the systemd user environment
@@ -48,10 +49,8 @@ PlasmoidItem {
     PlasmaCore.ToolTipArea {
         id: tooltip
         anchors.fill: parent
-        mainText: i18n("proKc — Proxy: %1", root.proxyEnabled ? i18n("ON") : i18n("OFF"))
-        subText: plasmoid.configuration.enableGsettings
-                 ? i18n("Click to toggle · Dynamic browser proxy: %1", root.proxyEnabled ? i18n("ON") : i18n("OFF"))
-                 : i18n("Click to toggle the system proxy")
+        mainText: i18n("proKc: %1", root.proxyEnabled ? i18n("ON") : i18n("OFF"))
+        subText: i18n("Click to toggle proxy")
 
         MouseArea {
             anchors.fill: parent
@@ -106,6 +105,25 @@ PlasmoidItem {
 
     function syncState() {
         executable.exec(root.stateQueryCommand)
+    }
+
+    // When "Dynamic browser proxy" (enableGsettings) is unchecked, the GNOME
+    // proxy stack keeps whatever mode the last toggle set (e.g. 'manual'), so
+    // browsers would keep applying the proxy. Reset it to 'none' immediately.
+    function resetGsettingsProxy() {
+        executable.exec("bash " + shellQuote(root.gsettingsOffScript))
+    }
+
+    // plasmoid.configuration is a KConfigPropertyMap (a QQmlPropertyMap);
+    // it emits valueChanged(key) whenever any config value changes — including
+    // writes from the settings dialog, which use the same map object.
+    Connections {
+        target: plasmoid.configuration
+        function onValueChanged(key) {
+            if (key === "enableGsettings" && !plasmoid.configuration.enableGsettings) {
+                root.resetGsettingsProxy()
+            }
+        }
     }
 
     Timer {

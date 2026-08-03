@@ -90,7 +90,7 @@ KCM.SimpleKCM {
                 IconPicker {
                     id: iconOnPicker
                     Layout.alignment: Qt.AlignHCenter
-                    defaultValue: "network-vpn"
+                    defaultValue: "network-connect"
                     Component.onCompleted: cfgValue = cfg_iconOn
                     onCfgValueChanged: cfg_iconOn = cfgValue
                 }
@@ -109,7 +109,7 @@ KCM.SimpleKCM {
                 IconPicker {
                     id: iconOffPicker
                     Layout.alignment: Qt.AlignHCenter
-                    defaultValue: "network-vpn-disconnected"
+                    defaultValue: "network-disconnect"
                     Component.onCompleted: cfgValue = cfg_iconOff
                     onCfgValueChanged: cfg_iconOff = cfgValue
                 }
