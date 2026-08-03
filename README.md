@@ -1,6 +1,8 @@
 # Proxy Toggle for Plasma 
 An ultra-simple Plasma widget that allows you to toggle proxy with a simple click. You can easily configure the host and ports inside the widget settings window. 
 
+<img height="500" alt="image" src="https://github.com/user-attachments/assets/a6baa05d-2aec-4b27-9cbd-22272cf64279" />
+
 ## How it works
 1. Runs a bundled bash script that sets the standard proxy environment
    variables (`HTTP_PROXY`, `HTTPS_PROXY`, `FTP_PROXY`, `ALL_PROXY`,
