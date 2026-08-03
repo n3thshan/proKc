@@ -20,5 +20,9 @@ A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When
 - `gsettings` must be installed on your system
 - `XDG_CURRENT_DESKTOP=GNOME` environment variable must be set for the browser 
 
+[Demo.webm](https://github.com/user-attachments/assets/c357ce95-0f7f-479f-ad52-f7e03873185c)
+
+> ***Note**: This is a simple HTML file that detects ip address changes in ifconfig.me. It turns green for ipv4 (my proxy) and red for ipv6 (my home ip address). Thus it acts as a demo that dynamic proxy is working! Also this is the Flatpak version of Brave.* 
+
 ## Credits 
 - Almost all of the credits go to [HimDek's Plasma Overview Widget](https://github.com/HimDek/Overview-Widget-for-Plasma) for serving as this project's template. 
