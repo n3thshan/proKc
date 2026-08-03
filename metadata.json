@@ -1,0 +1,23 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "n3thshan"
+            }
+        ],
+        "Category": "System Information",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "EnabledByDefault": true,
+        "Name": "proKc",
+        "Description": "Toggle the system proxy ON/OFF",
+        "Id": "com.n3thshan.prokc",
+        "Icon": "network-vpn",
+        "Version": "1.0",
+        "License": "GPL-3.0-or-later"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

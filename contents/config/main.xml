@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+
+  <group name="General">
+    <entry name="iconOn" type="String">
+      <label>Icon shown when the proxy is ON</label>
+      <default>network-connect</default>
+    </entry>
+    <entry name="iconOff" type="String">
+      <label>Icon shown when the proxy is OFF</label>
+      <default>network-disconnect</default>
+    </entry>
+    <entry name="host" type="String">
+      <label>Proxy host address</label>
+      <default>127.0.0.1</default>
+    </entry>
+    <entry name="port" type="Int">
+      <label>HTTP/HTTPS proxy port</label>
+      <default>1081</default>
+    </entry>
+    <entry name="socksPort" type="Int">
+      <label>SOCKS proxy port</label>
+      <default>1080</default>
+    </entry>
+    <entry name="noProxy" type="String">
+      <label>NO_PROXY list (comma-separated domains)</label>
+      <default>localhost,127.0.0.1,::1,localaddress,.localdomain.com</default>
+    </entry>
+    <entry name="enableGsettings" type="Bool">
+      <label>Enable dynamic browser proxy (gsettings)</label>
+      <default>false</default>
+    </entry>
+  </group>
+</kcfg>
