@@ -32,7 +32,7 @@ A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When
 
 ### Flatpak-specific instructions
 
-> ***NOTE**: This setup is not needed for some Chromium-based browsers like Brave and Chrome because it already ships with the necessary defaults. Therefore, check whether everything is working with your broswser first and only proceed if it does not.*
+> ***NOTE**: This setup is not needed for some Chromium-based browsers like Brave and Chrome because they already ship with the necessary defaults. Therefore, check whether everything is working with your browser first and only proceed if it does not.*
 
 Replace `your.browser.folder` and `your.browser.name` appropriately:
 1. Download [libdconfsettings.so](https://github.com/n3thshan/proKc/blob/main/libdconfsettings.so) and copy it to `~/.var/app/your.browser.folder/data/gio/modules/` (make these folders if not present)

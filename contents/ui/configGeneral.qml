@@ -227,7 +227,16 @@ KCM.SimpleKCM {
                     textFormat: Text.RichText
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.95
                     color: Kirigami.Theme.textColor
-                    text: i18n("<b>Prerequisites:</b><br>• gsettings must be installed<br>• set XDG_CURRENT_DESKTOP=GNOME environment variable for your browser")
+                    linkColor: Kirigami.Theme.linkColor
+                    text: i18n("<b>Additional setup required!</b><br><a href=\"https://github.com/n3thshan/proKc#prequisites\">https://github.com/n3thshan/proKc#prequisites</a>")
+                    onLinkActivated: (link) => Qt.openUrlExternally(link)
+                    // Text doesn't show a hand cursor over links by itself
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        acceptedButtons: Qt.NoButton
+                        hoverEnabled: true
+                    }
                 }
             }
         }
@@ -260,7 +269,7 @@ KCM.SimpleKCM {
                     textFormat: Text.RichText
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.95
                     color: Kirigami.Theme.textColor
-                    text: i18n("<b>NOTE:</b> Gives effect to selected proxy settings without needing to restart browser.")
+                    text: i18n("<b>NOTE:</b> Gives effect to selected proxy settings dynamically without needing to restart browser.")
                 }
             }
         }
