@@ -25,7 +25,7 @@ A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When
 [Demo.webm](https://github.com/user-attachments/assets/c357ce95-0f7f-479f-ad52-f7e03873185c)
 
 ### Prequisites
-- `gsettings` must be installed on your system
+- `gsettings` and `dconf` must be installed on your system
 - Set the `XDG_CURRENT_DESKTOP=GNOME` environment variable for your browser
 
 ---
