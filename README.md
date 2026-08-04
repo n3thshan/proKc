@@ -1,6 +1,8 @@
 # Proxy Toggle for Plasma 
 An ultra-simple Plasma widget that allows you to toggle proxy with a simple click. You can easily configure the host and ports inside the widget settings window. 
 
+<img height="150" alt="image" src="https://github.com/user-attachments/assets/90e28c98-fa4b-4ab9-b19a-a5f505eb65fa" />
+<img height="150" alt="image" src="https://github.com/user-attachments/assets/685cb89f-29c3-4296-816c-692555feab48" />
 <img height="500" alt="image" src="https://github.com/user-attachments/assets/a6baa05d-2aec-4b27-9cbd-22272cf64279" />
 
 ## How it works
