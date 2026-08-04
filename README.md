@@ -18,6 +18,10 @@ An ultra-simple Plasma widget that allows you to toggle proxy with a simple clic
    restart.
 
 ## Dynamic Browser Proxy
+
+[Demo.webm](https://github.com/user-attachments/assets/c357ce95-0f7f-479f-ad52-f7e03873185c)
+
+> ***Note**: This is a simple HTML file that detects ip address changes in ifconfig.me. It turns green for ipv4 (my proxy) and red for ipv6 (my home ip address). Thus it acts as a demo that dynamic proxy is working! Also this is the Flatpak version of Brave.* 
 A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When toggled, any browser (both Chromium and Firefox-based ones) can inherit proxy settings without needing to quit and restart the entire browser session.
 
 ### Prequisites
@@ -41,10 +45,6 @@ flatpak override --user \
   --env=GIO_EXTRA_MODULES=$HOME/.var/app/your.browser.folder/data/gio/modules \
   your.browser.name
 ```
-
-[Demo.webm](https://github.com/user-attachments/assets/c357ce95-0f7f-479f-ad52-f7e03873185c)
-
-> ***Note**: This is a simple HTML file that detects ip address changes in ifconfig.me. It turns green for ipv4 (my proxy) and red for ipv6 (my home ip address). Thus it acts as a demo that dynamic proxy is working! Also this is the Flatpak version of Brave.* 
 
 ## Credits 
 - Almost all of the credits go to [HimDek's Plasma Overview Widget](https://github.com/HimDek/Overview-Widget-for-Plasma) for serving as this project's template. 
