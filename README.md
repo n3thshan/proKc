@@ -28,13 +28,15 @@ A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When
 - `gsettings` must be installed on your system
 - Set the `XDG_CURRENT_DESKTOP=GNOME` environment variable for your browser
 
-**For flatpak browsers**
+---
 
-> ***NOTE**: This setup is not needed for browsers like Brave and Chrome because it already ships with the necessary defaults. Therefore, check whether everything is working with your broswser first and only proceed if it does not.*
+### Flatpak-specific instructions
+
+> ***NOTE**: This setup is not needed for some Chromium-based browsers like Brave and Chrome because it already ships with the necessary defaults. Therefore, check whether everything is working with your broswser first and only proceed if it does not.*
 
 Replace `your.browser.folder` and `your.browser.name` appropriately:
-- Download [libdconfsettings.so](https://github.com/n3thshan/proKc/blob/main/libdconfsettings.so) and copy it to `~/.var/app/your.browser.folder/data/gio/modules/` (make these folders if not present)
-- Copy and run the following command:
+1. Download [libdconfsettings.so](https://github.com/n3thshan/proKc/blob/main/libdconfsettings.so) and copy it to `~/.var/app/your.browser.folder/data/gio/modules/` (make these folders if not present)
+2. Copy and run the following command:
 ```
 flatpak override --user \
   --filesystem=xdg-run/dconf \
@@ -45,6 +47,26 @@ flatpak override --user \
   --env=GIO_EXTRA_MODULES=$HOME/.var/app/your.browser.folder/data/gio/modules \
   your.browser.name
 ```
+---
+
+### Additional setup for Firefox-based browsers
+- **Native package (.deb/.rpm/etc..)**
+
+Add the following line in front of `Exec=` inside the `firefox.desktop` file:
+```
+env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u no_proxy -u NO_PROXY
+```
+- **Flatpak**
+1. Follow the flatpak-specific instructions above
+2. Run the following command:
+```
+flatpak override --user \
+  --unset-env=http_proxy --unset-env=https_proxy --unset-env=ftp_proxy \
+  --unset-env=socks_proxy --unset-env=all_proxy --unset-env=no_proxy \
+  --unset-env=HTTP_PROXY --unset-env=HTTPS_PROXY --unset-env=FTP_PROXY \
+  --unset-env=SOCKS_PROXY --unset-env=ALL_PROXY --unset-env=NO_PROXY \
+  org.mozilla.firefox
+  ```
 
 ## Credits 
 - Almost all of the credits go to [HimDek's Plasma Overview Widget](https://github.com/HimDek/Overview-Widget-for-Plasma) for serving as this project's template. 
