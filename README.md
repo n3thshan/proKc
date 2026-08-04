@@ -67,6 +67,8 @@ flatpak override --user \
   --unset-env=SOCKS_PROXY --unset-env=ALL_PROXY --unset-env=NO_PROXY \
   org.mozilla.firefox
   ```
+---
+
 ### Known Issues
 - [Chromium Flatpak](https://github.com/n3thshan/proKc/issues/1)
 
