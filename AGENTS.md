@@ -53,7 +53,8 @@ proKc/
     │                              #   "Dynamic browser proxy" setting is unchecked)
     └── ui/
         ├── main.qml               # plasmoid UI: icon, tooltip, click-to-toggle
-        └── configGeneral.qml      # settings page (KCM.SimpleKCM)
+        └── configGeneral.qml      # settings page (KCM.SimpleKCM): icon pickers, proxy
+                                   #   settings, gsettings checkbox + info boxes (clickable link)
 ```
 
 ## Build / test / install
@@ -69,6 +70,12 @@ Install the built package for testing:
 kpackagetool6 --type=Plasma/Applet --install prokc.plasmoid
 # or for iteration:
 plasmashell --replace &   # after re-installing to reload
+```
+
+Updating an already-installed copy (no shell restart needed):
+
+```sh
+kpackagetool6 --type=Plasma/Applet --upgrade prokc.plasmoid
 ```
 
 Manual functional check (what the widget does under the hood):
@@ -102,8 +109,12 @@ bash contents/scripts/proxy_off.sh 0
 - Args for OFF: `gsettingsFlag` only.
 - A 300 ms debounce (`lastClick`) guards against accidental double-clicks
   toggling twice.
-- Icon and tooltip reflect `proxyEnabled` using the configured
-  `iconOn`/`iconOff` names.
+- Icon: `Plasmoid.icon` and the in-widget icon `source` both bind to
+  `proxyEnabled ? configuration.iconOn : configuration.iconOff`, so the
+  panel/chooser representation and the drawn icon stay in sync.
+- Tooltip: `mainText` is `proKc: ON` / `proKc: OFF` (i18n'd, reflects
+  `proxyEnabled`); `subText` is the static `Click to toggle proxy` — it no
+  longer shows gsettings status.
 - A `Connections` on `plasmoid.configuration` watches `onValueChanged(key)`.
   When `enableGsettings` flips **true → false** (user unchecks "Dynamic
   browser proxy" in settings), `resetGsettingsProxy()` runs
@@ -132,6 +143,15 @@ bash contents/scripts/proxy_off.sh 0
      update, otherwise `--systemd` re-imports the empty values back.
 - If gsettings=1: resets `org.gnome.system.proxy mode` to `none`.
 
+### gsettings_off.sh
+
+- Resets `org.gnome.system.proxy mode` to `none` via `gsettings` (guarded
+  with `command -v gsettings`) — the GNOME-stack counterpart of the
+  `proxy_off.sh` block. Does not touch the systemd/D-Bus proxy variables.
+- Run by the widget when the user **unchecks** "Dynamic browser proxy"
+  (see the `Connections` bullet above) so browsers stop applying the proxy
+  immediately. Safe to run manually at any time.
+
 ### Config schema (contents/config/main.xml)
 
 | Key            | Type   | Default                                                             |
@@ -144,6 +164,11 @@ bash contents/scripts/proxy_off.sh 0
 | `noProxy`      | String | `localhost,127.0.0.1,::1,localaddress,.localdomain.com`              |
 | `enableGsettings` | Bool | `false`                                                              |
 
+The schema table covers the *runtime state* icons. `metadata.json`'s
+`"Icon": "network-vpn"` is separate — it's the icon for the **Add Widgets**
+chooser and the KDE Store entry, and intentionally differs from
+`iconOn`/`iconOff`.
+
 ## Code conventions
 
 - **SPDX headers**: every source file starts with a comment block containing
@@ -153,6 +178,11 @@ bash contents/scripts/proxy_off.sh 0
   descriptive headers — add SPDX blocks when touching them).
 - **i18n**: all user-visible strings wrapped in `i18n()` / `i18nc()` with a
   proper context comment (e.g. `i18nc("@label:textbox", "Host:")`).
+- **Clickable links in UI text**: rendered with `textFormat:
+  Text.RichText` + `linkColor: Kirigami.Theme.linkColor` + `onLinkActivated:
+  (link) => Qt.openUrlExternally(link)`. Plain `Text`/`Label` doesn't show a
+  hand cursor over links — wrap it in a `MouseArea` (`hoverEnabled: true`,
+  `acceptedButtons: Qt.NoButton`) driven by `parent.hoveredLink`.
 - **Script style**: bash scripts use `#!/usr/bin/env bash`, `set -uo
   pipefail`, `${1:?error message}` for required args, `|| true` for
   best-effort side effects, and guard external commands with `command -v`.
@@ -180,5 +210,8 @@ bash contents/scripts/proxy_off.sh 0
   string; keep the quoting (`'...'` entries, `, ` separators) intact.
 - The debounce threshold (300 ms) is a deliberate guard; changing it affects
   toggle reliability on fast clicks.
+- The `#prequisites` anchor in the config-page link is **deliberately
+  misspelled** — it must match the `### Prequisites` heading in the README;
+  do not "fix" it without updating the README heading too.
 - `prokc.plasmoid` is a committed build artifact; rebuild with `make` after
   editing anything under `contents/` or `metadata.json`.
