@@ -67,6 +67,8 @@ flatpak override --user \
   --unset-env=SOCKS_PROXY --unset-env=ALL_PROXY --unset-env=NO_PROXY \
   org.mozilla.firefox
   ```
+### Known Issues
+- [Chromium Flatpak](https://github.com/n3thshan/proKc/issues/1)
 
 ## Credits 
 - Almost all of the credits go to [HimDek's Plasma Overview Widget](https://github.com/HimDek/Overview-Widget-for-Plasma) for serving as this project's template. 
