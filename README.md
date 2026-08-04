@@ -18,11 +18,25 @@ An ultra-simple Plasma widget that allows you to toggle proxy with a simple clic
    restart.
 
 ## Dynamic Browser Proxy
-A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When toggled, any browser (both Chromium and Firefox-based ones) can inherit proxy settings without needing to quit and restart the entire browser session. 
+A cool feature that adds the seamlessness of GNOME's proxy handling to KDE! When toggled, any browser (both Chromium and Firefox-based ones) can inherit proxy settings without needing to quit and restart the entire browser session.
 
 ### Prequisites
 - `gsettings` must be installed on your system
-- `XDG_CURRENT_DESKTOP=GNOME` environment variable must be set for the browser 
+- Set the `XDG_CURRENT_DESKTOP=GNOME` environment variable for your browser
+
+**Flatpak Setup***(only if it is not working):
+- Download x and copy it to `~/.var/app/your.browser.folder/data/gio/modules/` (make these folders if not present)
+- Run the following command (replace `your.browser.folder` and `your.browser.name` appropriately)
+```
+flatpak override --user \
+  --filesystem=xdg-run/dconf \
+  --filesystem=~/.config/dconf:ro \
+  --talk-name=ca.desrt.dconf \
+  --env=GSETTINGS_BACKEND=dconf \
+  --env=DCONF_USER_CONFIG_DIR=.config/dconf \
+  --env=GIO_EXTRA_MODULES=$HOME/.var/app/your.browser.folder/data/gio/modules \
+  your.browser.name
+```
 
 [Demo.webm](https://github.com/user-attachments/assets/c357ce95-0f7f-479f-ad52-f7e03873185c)
 
