@@ -97,6 +97,11 @@ bash contents/scripts/proxy_off.sh 0
 - On load (`Component.onCompleted`) and ~700 ms after each toggle
   (`syncTimer`), the widget runs the state-query command via the
   `executable` `Plasma5Support.DataSource` and re-syncs `proxyEnabled`.
+- "Keep proxy after login" (`keepProxyAfterLogin`) re-applies the proxy via
+  `toggleProxy()` **only on the first state sync after the widget loads**
+  (`appliedOnLoad` flag), i.e. after login/restart when the env is gone.
+  It must NOT fire on later re-syncs — otherwise every manual toggle-OFF
+  would be undone by the 700 ms `syncTimer` re-sync.
 
 ### main.qml flow
 
@@ -163,6 +168,7 @@ bash contents/scripts/proxy_off.sh 0
 | `socksPort`    | Int    | `1080` (SOCKS)                                                       |
 | `noProxy`      | String | `localhost,127.0.0.1,::1,localaddress,.localdomain.com`              |
 | `enableGsettings` | Bool | `false`                                                              |
+| `keepProxyAfterLogin` | Bool | `false`                                                              |
 
 The schema table covers the *runtime state* icons. `metadata.json`'s
 `"Icon": "network-vpn"` is separate — it's the icon for the **Add Widgets**

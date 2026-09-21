@@ -23,6 +23,7 @@ KCM.SimpleKCM {
     property int cfg_socksPort: plasmoid.configuration.socksPort
     property string cfg_noProxy: plasmoid.configuration.noProxy
     property bool cfg_enableGsettings: plasmoid.configuration.enableGsettings
+    property bool cfg_keepProxyAfterLogin: plasmoid.configuration.keepProxyAfterLogin
 
     // Defaults (must match contents/config/main.xml) — used by KCM on Reset
     property string cfg_iconOnDefault: "network-connect"
@@ -32,6 +33,7 @@ KCM.SimpleKCM {
     property int cfg_socksPortDefault: 1080
     property string cfg_noProxyDefault: "localhost,127.0.0.1,::1,localaddress,.localdomain.com"
     property bool cfg_enableGsettingsDefault: false
+    property bool cfg_keepProxyAfterLoginDefault: false
 
     component IconPicker: Button {
         id: picker
@@ -183,6 +185,52 @@ KCM.SimpleKCM {
             text: cfg_noProxy
             placeholderText: "localhost,127.0.0.1,::1,localaddress,.localdomain.com"
             onTextChanged: cfg_noProxy = text
+        }
+
+        // ── Keep proxy after login ───────────────────────────────────
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18nc("@title:group", "Keep proxy after login")
+        }
+
+        CheckBox {
+            id: keepProxyCheck
+            Layout.maximumWidth: formLayout.fieldMaxWidth
+            text: i18nc("@label:checkbox", "Keep the proxy enabled after reboot/login")
+            checked: cfg_keepProxyAfterLogin
+            onToggled: cfg_keepProxyAfterLogin = checked
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.maximumWidth: formLayout.fieldMaxWidth
+            implicitHeight: keepProxyInfoLayout.implicitHeight + Kirigami.Units.gridUnit
+            radius: 5
+            color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.08)
+            border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.25)
+            border.width: 1
+
+            RowLayout {
+                id: keepProxyInfoLayout
+                anchors.fill: parent
+                anchors.margins: Kirigami.Units.gridUnit * 0.6
+                spacing: Kirigami.Units.smallSpacing
+
+                Kirigami.Icon {
+                    source: "info"
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 1.5
+                    Layout.preferredHeight: Kirigami.Units.gridUnit * 1.5
+                    Layout.alignment: Qt.AlignTop
+                }
+
+                Label {
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.95
+                    color: Kirigami.Theme.textColor
+                    text: i18n("Re-applies the proxy when this widget loads at login. Turning it OFF manually only lasts until the next login while this is enabled.")
+                }
+            }
         }
 
         // ── Dynamic proxy for Browsers ────────────────────────────────

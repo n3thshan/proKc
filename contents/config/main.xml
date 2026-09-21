@@ -34,5 +34,9 @@
       <label>Enable dynamic browser proxy (gsettings)</label>
       <default>false</default>
     </entry>
+    <entry name="keepProxyAfterLogin" type="Bool">
+      <label>Keep the proxy enabled after reboot/login</label>
+      <default>false</default>
+    </entry>
   </group>
 </kcfg>

@@ -43,6 +43,10 @@ PlasmoidItem {
     property bool proxyEnabled: false
     // Guards against accidental double-clicks toggling twice
     property real lastClick: 0
+    // "Keep proxy after login" is applied only once, on the first state sync
+    // after the widget loads (login/restart) — not on later re-syncs, which
+    // would undo a manual toggle.
+    property bool appliedOnLoad: false
 
     Plasmoid.icon: root.proxyEnabled ? plasmoid.configuration.iconOn : plasmoid.configuration.iconOff
 
@@ -140,6 +144,16 @@ PlasmoidItem {
             if (source === root.stateQueryCommand) {
                 const out = String(data.stdout || "").toString().trim()
                 root.proxyEnabled = (out === "ON")
+                // "Keep proxy after login": re-apply only on the first sync
+                // after the widget loads (fresh login/restart, since the env
+                // doesn't persist). Never on later re-syncs — those follow a
+                // manual toggle and must not override it.
+                if (!root.appliedOnLoad) {
+                    root.appliedOnLoad = true
+                    if (plasmoid.configuration.keepProxyAfterLogin && !root.proxyEnabled) {
+                        root.toggleProxy()
+                    }
+                }
             } else if (data.failed || Number(data["exit code"]) !== 0) {
                 console.warn("proKc: command failed:", source, "stderr:", data.stderr)
             }
